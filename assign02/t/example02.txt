@@ -1,2 +1,8 @@
-var a;
-a=3;
+var s;
+s = "foobarbaz";
+var p;
+p = "p\np";
+var s2;
+s2 = strcat(s, p);
+println(s2);
+49;

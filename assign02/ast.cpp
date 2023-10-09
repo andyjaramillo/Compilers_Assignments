@@ -45,6 +45,24 @@ std::string ASTTreePrint::node_tag_to_string(int tag) const {
     return "EQ";
   case AST_NOTCOMPARE:
     return "NEQ";
+  case AST_IF:
+    return "IF_STATEMENT";
+  case AST_ELSE:
+    return "ELSE_STATEMENT";
+  case AST_WHILE:
+    return "WHILE_STATEMENT";
+  case AST_FUNC:
+    return "FUNCTION";
+  case AST_PARAMETER_LIST:
+    return "PARAMETER_LIST";
+  case AST_STATEMENT_LIST:
+    return "STATEMENT_LIST";
+  case AST_FNCALL:
+    return "FNCALL";
+  case AST_ARGLIST:
+    return "ARGLIST";
+  case AST_STRING:
+    return "STRING";
   // TODO: add cases for other AST node kinds
   default:
     RuntimeError::raise("Unknown AST node type %d\n", tag);

@@ -115,6 +115,14 @@ Node *Lexer::read_token() {
         read_continued_token(TOK_IDENTIFIER, lexeme, line, col, isalnum);
     if (tok->get_str() == "var") {
       tok->set_tag(TOK_VAR);
+    } else if(tok->get_str() == "function") {
+      tok->set_tag(TOK_FUNCTION);
+    } else if(tok->get_str()== "if"){
+      tok->set_tag(TOK_IF);
+    } else if(tok->get_str() == "else"){
+      tok->set_tag(TOK_ELSE);
+    } else if(tok->get_str() == "while"){
+      tok->set_tag(TOK_WHILE);
     }
 
     // TODO: use set_tag to change the token kind if it's actually a keyword
@@ -137,6 +145,16 @@ Node *Lexer::read_token() {
       return token_create(TOK_RPAREN, lexeme, line, col);
     case ';':
       return token_create(TOK_SEMICOLON, lexeme, line, col);
+    case '{':
+      return token_create(TOK_LEFT_BRACKET, lexeme, line, col);
+    case '}':
+      return token_create(TOK_RIGHT_BRACKET, lexeme, line, col);
+    case ',':
+      return token_create(TOK_COMMA, lexeme, line, col);
+    case '"':{
+      std::string full_string = read_continued_string_character_token(TOK_STRING, lexeme, line, col);
+      return token_create(TOK_STRING, full_string, line, col);
+    }
     case '=': {
       std::string equals =
           read_continued_character_token(TOK_COMPARE, lexeme, line, col);
@@ -219,6 +237,39 @@ std::string Lexer::read_continued_character_token(
     unread(c);
   }
   return lexeme;
+}
+
+std::string Lexer::read_continued_string_character_token(
+    enum TokenKind kind, const std::string &lexeme_start, int line, int col) {
+  std::string lexeme(lexeme_start);
+  int backslash = 92;
+
+  for (;;) {
+    int c = read();
+    if (c >= 0 && c != '"') {
+      if(c == backslash){
+           //check if its one of the symbols
+        int k = read();
+        if(k == 'n' || k == 't' || k == '"' || k == 'r'){
+          //special token
+          lexeme.push_back(char(c));
+          lexeme.push_back(char(k));
+          continue;
+        }else{
+          //contains \other_symbol so we see backslash and other symbol as seperate
+          unread(k);
+          lexeme.push_back(char(c));
+          continue;
+        }
+      } else {
+         lexeme.push_back(char(c));
+      }
+    } else {  
+       // token has finished
+       lexeme.push_back(char(c));
+       return lexeme;
+    }
+  }
 }
 
 // TODO: implement additional member functions if necessary

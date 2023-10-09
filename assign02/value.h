@@ -5,7 +5,8 @@
 #include <string>
 class ValRep;
 class Function;
-
+class Array;
+class String;
 enum ValueKind {
   // "atomic" values
   VALUE_INT,
@@ -15,6 +16,8 @@ enum ValueKind {
   // dynamic values: these have an associated dynamically-allocated
   // object (drived from ValRep)
   VALUE_FUNCTION,
+  VALUE_ARRAY,
+  VALUE_STRING
   // could add other kinds of dynamic values here
 };
 
@@ -47,6 +50,8 @@ private:
 public:
   Value(int ival = 0);
   Value(Function *fn);
+  Value(Array *an);
+  Value(String * str);
   Value(IntrinsicFn intrinsic_fn);
   Value(const Value &other);
   ~Value();
@@ -65,6 +70,8 @@ public:
   }
 
   Function *get_function() const;
+  Array *get_array() const;
+  String *get_string() const;
 
   IntrinsicFn get_intrinsic_fn() const {
     assert(m_kind == VALUE_INTRINSIC_FN);
@@ -80,6 +87,7 @@ public:
 
 private:
   // TODO: add additional member functions, if necessary
+  std::string recursive_as_str(ValueKind kind, Value element) const;
 };
 
 #endif // VALUE_H

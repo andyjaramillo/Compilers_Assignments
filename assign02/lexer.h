@@ -43,6 +43,8 @@ private:
   //this function was to read multi character tokens. Simply checks if the following character will lead to compare, and, or. If not
   //then it calls unread
   std::string read_continued_character_token(enum TokenKind kind, const std::string &lexeme_start, int line, int col);
+  std::string read_continued_string_character_token(
+    enum TokenKind kind, const std::string &lexeme_start, int line, int col);
   bool isKeyword(std::string str);
 };
 

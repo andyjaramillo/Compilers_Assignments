@@ -17,7 +17,6 @@ private:
   // value semantics prohibited
   Function(const Function &);
   Function &operator=(const Function &);
-
 public:
   Function(const std::string &name, const std::vector<std::string> &params, Environment *parent_env, Node *body);
   virtual ~Function();

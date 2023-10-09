@@ -1,7 +1,7 @@
 CXX_SRCS = cpputil.cpp lexer.cpp parser2.cpp \
 	main.cpp ast.cpp node_base.cpp node.cpp treeprint.cpp \
 	location.cpp exceptions.cpp \
-	interp.cpp value.cpp environment.cpp valrep.cpp function.cpp
+	interp.cpp value.cpp environment.cpp valrep.cpp function.cpp array.cpp string.cpp
 CXX_OBJS = $(CXX_SRCS:%.cpp=%.o)
 
 CXX = g++

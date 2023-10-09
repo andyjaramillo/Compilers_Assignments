@@ -24,6 +24,14 @@ enum TokenKind {
   TOK_GREATEROREQUAL,
   TOK_COMPARE,
   TOK_NOTCOMPARE,
+  TOK_FUNCTION,
+  TOK_IF,
+  TOK_ELSE,
+  TOK_WHILE,
+  TOK_LEFT_BRACKET,
+  TOK_RIGHT_BRACKET,
+  TOK_COMMA,
+  TOK_STRING,
   // TODO: add members for additional kinds of tokens
 };
 

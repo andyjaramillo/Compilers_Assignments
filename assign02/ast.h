@@ -23,6 +23,15 @@ enum ASTKind {
   AST_GREATEROREQUAL,
   AST_COMPARE,
   AST_NOTCOMPARE,
+  AST_IF,
+  AST_ELSE,
+  AST_WHILE,
+  AST_FUNC,
+  AST_PARAMETER_LIST,
+  AST_STATEMENT_LIST,
+  AST_FNCALL,
+  AST_ARGLIST,
+  AST_STRING,
   // TODO: add members for other AST node kinds
 };
 
