@@ -8,9 +8,11 @@
 #include "symtab.h"
 #include "ast_visitor.h"
 
+
 class SemanticAnalysis : public ASTVisitor {
 private:
   SymbolTable *m_global_symtab, *m_cur_symtab;
+
 
 public:
   SemanticAnalysis();
@@ -42,6 +44,18 @@ public:
 
 private:
   // TODO: add helper functions
+  
+std::shared_ptr<BasicType> create_basic_type(bool isSigned, bool isUnsigned, bool isVoid, bool isInt, bool isChar, bool isShort, bool isLong);
+void enter_scope();
+void leave_scope();
+std::shared_ptr<Type> evaluateExpression(Node * n);
+std::shared_ptr<Type> getLvalue(Node *n);
+std::string returnToken(Node * n);
+std::string returnSize(Node *n);
+void isLessPrecise(Node * n1, Node * n2 , Node * setNode);
+int determinePrecision(Node * n);
+Node *promote_to_int(Node *n);
+Node *implicit_conversion(Node *n, const std::shared_ptr<Type> &type);
 };
 
 #endif // SEMANTIC_ANALYSIS_H

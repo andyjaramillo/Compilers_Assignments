@@ -87,6 +87,7 @@ unsigned Type::get_array_size() const {
   RuntimeError::raise("not an ArrayType");
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 // HasBaseType implementation
 ////////////////////////////////////////////////////////////////////////
@@ -167,6 +168,16 @@ void HasMembers::add_member(const Member &member) {
   m_members.push_back(member);
 }
 
+bool HasMembers::has_member(std::string name){
+  assert(m_members.size() > 0);
+  for(unsigned i =0; i < m_members.size(); i++){
+    if(m_members[i].get_name() == name){
+      return true;
+    }
+  }
+  return false;
+}
+
 unsigned HasMembers::get_num_members() const {
   return unsigned(m_members.size());
 }
@@ -174,6 +185,17 @@ unsigned HasMembers::get_num_members() const {
 const Member &HasMembers::get_member(unsigned index) const {
   assert(index < m_members.size());
   return m_members[index];
+}
+
+const Member &HasMembers::get_member_by_string(std::string name) const {
+  bool isFound = false;
+  for(unsigned i =0; i < m_members.size(); i++) {
+    if(m_members[i].get_name() == name) {
+      isFound = true;
+      return m_members[i];
+    }
+  }
+  assert(isFound);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -331,6 +353,10 @@ BasicTypeKind BasicType::get_basic_type_kind() const {
 
 bool BasicType::is_signed() const {
   return m_is_signed;
+}
+
+void BasicType::change_sign(){
+  m_is_signed = !m_is_signed;
 }
 
 unsigned BasicType::get_storage_size() const {
@@ -552,9 +578,7 @@ bool ArrayType::is_same(const Type *other) const {
   if (!other->is_array())
     return false;
 
-  const ArrayType *other_at = dynamic_cast<const ArrayType *>(other);
-  return m_size == other_at->m_size
-      && get_base_type()->is_same(other->get_base_type().get());
+  return get_base_type()->is_same(other->get_base_type()->get_unqualified_type());
 }
 
 std::string ArrayType::as_str() const {

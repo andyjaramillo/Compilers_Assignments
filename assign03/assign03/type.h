@@ -16,6 +16,7 @@ enum class BasicTypeKind {
   VOID,
 };
 
+
 // Type qualifiers
 enum class TypeQualifier {
   VOLATILE,
@@ -85,6 +86,7 @@ public:
   virtual BasicTypeKind get_basic_type_kind() const;
   virtual bool is_signed() const;
 
+
   // Functions common to StructType and FunctionType.
   // A "member" is a parameter (for FunctionTypes) or a field (for StructTypes).
   virtual void add_member(const Member &member);
@@ -94,7 +96,7 @@ public:
   // FunctionTypes, PointerTypes, and ArrayTypes all have
   // a base type.
   virtual std::shared_ptr<Type> get_base_type() const;
-
+ // virtual void change_sign();
   // FunctionType-only member functions
   // (there aren't any, at least for now...)
 
@@ -160,6 +162,9 @@ public:
   virtual void add_member(const Member &member);
   virtual unsigned get_num_members() const;
   virtual const Member &get_member(unsigned index) const;
+  virtual const Member &get_member_by_string(std::string name) const;
+   bool has_member(std::string name);
+
 };
 
 // A QualifiedType modifies a "delegate" type with a TypeQualifier
@@ -219,6 +224,7 @@ public:
   virtual bool is_signed() const;
   virtual unsigned get_storage_size() const;
   virtual unsigned get_alignment() const;
+  void change_sign();
 };
 
 class StructType : public HasMembers {

@@ -102,6 +102,12 @@ Symbol *SymbolTable::lookup_recursive(const std::string &name) const {
   return nullptr;
 }
 
+void SymbolTable::remove_fn_type(){
+  assert(m_fn_type);
+  m_fn_type = nullptr;
+}
+
+
 void SymbolTable::set_fn_type(const std::shared_ptr<Type> &fn_type) {
   assert(!m_fn_type);
   assert(fn_type->is_function());
@@ -116,8 +122,8 @@ std::shared_ptr<Type> SymbolTable::get_fn_type() const {
     symtab = symtab->m_parent;
   }
 
-  assert(false);
-  return std::shared_ptr<Type>();
+ // assert(false);
+  return nullptr;
 }
 
 void SymbolTable::add_symbol(Symbol *sym) {

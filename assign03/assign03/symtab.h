@@ -88,6 +88,7 @@ public:
   // scope of a function to record the exact type of the function
   void set_fn_type(const std::shared_ptr<Type> &fn_type);
 
+  void remove_fn_type();
   // This returns the function type of the enclosing function, or nullptr
   // if there is no enclosing function. This is helpful for type checking
   // a return statement, to make sure that the value returned is

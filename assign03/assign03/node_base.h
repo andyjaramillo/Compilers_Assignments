@@ -33,6 +33,8 @@
 class NodeBase {
 private:
   // TODO: fields (pointer to Type, pointer to Symbol, etc.)
+  std::shared_ptr<Type> type;
+  Symbol * symb;
 
   // copy ctor and assignment operator not supported
   NodeBase(const NodeBase &);
@@ -43,6 +45,12 @@ public:
   virtual ~NodeBase();
 
   // TODO: add member functions
+  void set_type(std::shared_ptr<Type> newType);
+  bool has_type() const;
+  std::shared_ptr<Type> get_type() const;
+  bool has_symbol() const ;
+  void set_symbol(Symbol * variable_def);
+  Symbol * get_symbol(){ return symb;}
 };
 
 #endif // NODE_BASE_H

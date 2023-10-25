@@ -21,10 +21,51 @@
 #include <cassert>
 #include "node_base.h"
 
-NodeBase::NodeBase() {
+NodeBase::NodeBase() 
+  : type(nullptr)
+  , symb(nullptr) {
+  
 }
 
 NodeBase::~NodeBase() {
 }
 
 // TODO: implement member functions
+
+bool NodeBase::has_symbol() const {
+  // if(symb){
+  //     if(symb->get_parent()->has_symbol())
+  // } else {
+  //   return false;
+  // }
+ 
+  return symb != nullptr;
+}
+
+bool NodeBase::has_type() const {
+  return type != nullptr;
+}
+
+
+void NodeBase::set_type(std::shared_ptr<Type> newType){
+    // assert(!has_symbol());
+    assert(!type);
+    type = newType;
+}
+
+std::shared_ptr<Type> NodeBase::get_type() const {
+
+ // if (has_symbol())
+ //   return symb->get_type(); 
+ // else {
+    assert(type);
+    return type;
+ // }
+}
+
+void NodeBase::set_symbol(Symbol * variable_def){
+  //assert(!has_symbol());
+  assert(type == nullptr);
+    symb = variable_def;
+}
+
